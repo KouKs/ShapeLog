@@ -1,0 +1,58 @@
+{
+  "name": "shapelog-api",
+  "version": "0.0.1",
+  "description": "API backed for the ShapeLog app.",
+  "main": "dist",
+  "scripts": {
+    "watch": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
+    "build": "babel src -s -D -d dist --presets es2015,stage-0",
+    "start": "node dist",
+    "prestart": "npm run -s build",
+    "test": "eslint src"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": 7,
+      "sourceType": "module"
+    },
+    "env": {
+      "node": true
+    },
+    "rules": {
+      "no-console": 0,
+      "no-unused-vars": 1
+    }
+  },
+  "author": "Pavel Koch <kouks@koch@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "compression": "^1.5.2",
+    "cors": "^2.7.1",
+    "express": "^4.13.3",
+    "morgan": "^1.8.0",
+    "resource-router-middleware": "^0.6.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-core": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "body-parser": "^1.18.2",
+    "eslint": "^3.1.1",
+    "lodash": "^4.17.4",
+    "multer": "^1.3.0",
+    "mysql": "^2.15.0",
+    "nodemon": "^1.9.2"
+  },
+  "bugs": {
+    "url": "https://github.com/developit/express-es6-rest-api/issues"
+  },
+  "homepage": "https://github.com/developit/express-es6-rest-api#readme",
+  "keywords": [
+    "shapelog",
+    "api",
+    "backed",
+    "project"
+  ]
+}
