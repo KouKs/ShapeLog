@@ -16,7 +16,7 @@ export default class Validator {
   }
 
   registerRules () {
-    return require('./rules').default
+    return require('./Rules').default
   }
 
   resolveRules () {

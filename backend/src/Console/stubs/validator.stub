@@ -1,0 +1,25 @@
+import Validator from './Validator'
+
+export default class SampleValidator extends Validator {
+  /**
+   * The validation rules.
+   *
+   * @var Object
+   */
+  get rules () {
+    return {
+      //
+    }
+  }
+
+  /**
+   * The validation error messages.
+   *
+   * @var Object
+   */
+  get messages () {
+    return {
+      //
+    }
+  }
+}

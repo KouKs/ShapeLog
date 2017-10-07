@@ -1,0 +1,69 @@
+import Controller from './Controller'
+
+export default class SampleController extends Controller {
+  /**
+   * Class constructor.
+   *
+   * @return void
+   */
+  constructor () {
+    super()
+
+    //
+  }
+
+  /**
+   * Returns a collection of the resource.
+   *
+   * @param  Request  req
+   * @param  Response res
+   * @return void
+   */
+  index (req, res) {
+    //
+  }
+
+  /**
+   * Stores a newly created record in the storage.
+   *
+   * @param  Request  req
+   * @param  Response res
+   * @return void
+   */
+  store (req, res) {
+    //
+  }
+
+  /**
+   * Shows a single record of the resource.
+   *
+   * @param  Request  req
+   * @param  Response res
+   * @return void
+   */
+  show (req, res) {
+    //
+  }
+
+  /**
+   * Updates a given resource in the storage.
+   *
+   * @param  Request  req
+   * @param  Response res
+   * @return void
+   */
+  update (req, res) {
+    //
+  }
+
+  /**
+   * Removes a record from the storage.
+   *
+   * @param  Request  req
+   * @param  Response res
+   * @return void
+   */
+  destroy (req, res) {
+    //
+  }
+}

@@ -1,6 +1,4 @@
-import multer from 'multer'
-
-export default class FileUpload {
+export default class Sample {
   /**
    * Handles the incoming request.
    *
@@ -10,6 +8,6 @@ export default class FileUpload {
    * @return Closure
    */
   handle (req, res, next) {
-    return multer().array
+    //
   }
 }

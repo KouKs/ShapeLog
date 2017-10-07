@@ -1,6 +1,7 @@
 import Route from './Http/Route'
 
-import TestController from './Http/Controllers/TestController'
+import User from './Database/Models/User'
+import Message from './Database/Models/Message'
 
 export default [
 
@@ -10,6 +11,15 @@ export default [
   |
   */
 
-  Route.resource('test', TestController)
+  Route.post('/', (req, res) => {
+    Message.find(1, (message) => {
+      message.user.first((user) => {
+        console.log(user)
+      })
+    })
+
+
+    res.send('Hello!')
+  })
 
 ]
