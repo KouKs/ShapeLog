@@ -1,4 +1,5 @@
-const nodeExternals = require('webpack-node-externals');
+const nodeExternals = require('webpack-node-externals')
+const Nodemon = require('nodemon-webpack-plugin')
 
 function basePath (dir) {
   return require('path').join(__dirname, dir)
@@ -8,6 +9,9 @@ module.exports = {
   entry: './src/main.js',
   target: 'node',
   externals: [nodeExternals()],
+  plugins: [
+    new Nodemon()
+  ],
   output: {
     path: basePath('dist'),
     publicPath: '/dist/',

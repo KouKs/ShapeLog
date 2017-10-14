@@ -56,20 +56,20 @@ export default class ResourceStore {
 
   static get getters () {
     return {
-      find: (state, getters) => (id) => {
+      find: (state) => (id) => {
         return state.resources.find(resource => resource.id === id)
       },
 
-      all: (state, getters) => {
+      all: (state) => {
         return state.resources
       },
 
-      errors: (state, getters) => {
+      errors: (state) => {
         return state.errors
       },
 
-      hasErrors: (state, getters) => {
-        return Boolean(Object.keys(getters.errors).length)
+      hasErrors: (state) => (field) => {
+        return Boolean(state.errors[field].length)
       }
     }
   }

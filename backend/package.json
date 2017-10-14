@@ -4,7 +4,7 @@
   "description": "API backed for the ShapeLog app.",
   "main": "dist/build.js",
   "scripts": {
-    "watch": "cross-env NODE_ENV=development webpack-dev-server --hot",
+    "watch": "webpack --watch",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules && node ."
   },
   "author": "Pavel Koch <kouks@koch@gmail.com>",
@@ -12,6 +12,7 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "colors": "^1.1.2",
+    "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "^4.13.3",
@@ -29,8 +30,8 @@
     "eslint-loader": "^1.9.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "nodemon-webpack-plugin": "^0.1.5",
     "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1",
     "webpack-node-externals": "^1.6.0"
   },
   "keywords": [

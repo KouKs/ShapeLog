@@ -2,30 +2,21 @@
   <div>
     {{ allTests }}
     {{ testErrors }}
-    {{ testHasErrors }}
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import resource from '@/mixins/resource'
 
 export default {
-  computed: {
-    ...mapGetters({
-      findTest: 'tests/find', allTests: 'tests/all', testErrors: 'tests/errors', testHasErrors: 'tests/hasErrors'
-    })
-  },
+  mixins: [resource('tests')],
 
   mounted () {
-    // this.loadTests()
+    this.loadTests()
 
-    this.storeTest({ name: 'asaasdasdd' })
-  },
+    console.log(this.$auth)
 
-  methods: {
-    ...mapActions({
-      loadTests: 'tests/load', storeTest: 'tests/store', deleteTest: 'tests/delete', updateTest: 'tests/update'
-    })
+    // this.storeTest({ name: 'asaasdasdasdsasdd' })
   }
 }
 </script>

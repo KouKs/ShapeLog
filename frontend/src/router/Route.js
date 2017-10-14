@@ -40,8 +40,8 @@ export default class Route {
    * @param  Middleware middleware
    * @return Route
    */
-  middleware (middleware) {
-    this.routeMiddleware = middleware
+  middleware (Middleware) {
+    this.Middleware = new Middleware()
 
     return this
   }
@@ -57,11 +57,11 @@ export default class Route {
       component: this.component,
       name: this.name,
       beforeEnter: (to, from, next) => {
-        if (!this.routeMiddleware) {
+        if (!this.Middleware) {
           return next()
         }
 
-        return this.routeMiddleware.handle(to, from, next)
+        return this.Middleware.handle(to, from, next)
       }
     }
   }

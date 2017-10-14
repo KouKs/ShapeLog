@@ -11,15 +11,4 @@ export default class SampleValidator extends Validator {
       //
     }
   }
-
-  /**
-   * The validation error messages.
-   *
-   * @var Object
-   */
-  get messages () {
-    return {
-      //
-    }
-  }
 }

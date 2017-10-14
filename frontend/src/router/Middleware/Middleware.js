@@ -1,4 +1,4 @@
-export default class Sample {
+export default class Middleware {
   /**
    * Handles the incoming request.
    *
@@ -9,5 +9,8 @@ export default class Sample {
    */
   handle (to, from, next) {
     //
+    to.meta['user'] = 'asd'
+
+    return next()
   }
 }
