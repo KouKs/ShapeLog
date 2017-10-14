@@ -7,7 +7,7 @@ export default class QueryDecorator {
     return this.query.getSql(params)
   }
 
-  getEscapedData(params) {
+  getEscapedData (params) {
     return this.query.getEscapedData(params)
   }
 }

@@ -10,7 +10,7 @@ export default class WithWhere extends QueryDecorator {
     return this.query.getSql(params) + this.build(params)
   }
 
-  getEscapedData(params) {
+  getEscapedData (params) {
     return this.query.getEscapedData(params).concat(_.flatten(params.where.map((where) => {
       return Object.values(where)
     })))

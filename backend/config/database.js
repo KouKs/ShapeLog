@@ -1,7 +1,9 @@
+import { env } from '@/helpers'
+
 export default {
-  host: '192.168.10.10',
-  port: '3306',
-  user: 'homestead',
-  password: 'secret',
-  database: 'shapelog'
+  host: env('DB_HOST'),
+  port: env('DB_PORT'),
+  user: env('DB_USERNAME'),
+  password: env('DB_PASSWORD'),
+  database: env('DB_DATABASE')
 }

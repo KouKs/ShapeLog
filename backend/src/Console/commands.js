@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path');
-const Command = require('./Command')
 const colors = require('colors');
+const Command = require('./Command')
 
 
 module.exports = [

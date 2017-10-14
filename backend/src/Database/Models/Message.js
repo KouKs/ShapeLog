@@ -1,5 +1,5 @@
-import Model from './Model'
 import User from './User'
+import Model from './Model'
 
 export default class Message extends Model {
   get table () {

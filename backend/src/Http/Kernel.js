@@ -1,7 +1,13 @@
 import _ from 'lodash'
-import Route from './Route'
+import SetHeaders from '@/Http/Middleware/SetHeaders'
 
 export default class Kernel {
+  static get defaultMiddleware () {
+    return [
+      SetHeaders
+    ]
+  }
+
   static boot (app) {
     this.resolveRoutes(app)
   }
@@ -11,6 +17,10 @@ export default class Kernel {
   }
 
   static resolveRoutes (app) {
-    _.flatten(this.registerRoutes()).forEach(route => route.resolve(app))
+    _.flatten(this.registerRoutes()).forEach((route) => {
+      route.middleware(this.defaultMiddleware)
+
+      route.resolve(app)
+    })
   }
 }

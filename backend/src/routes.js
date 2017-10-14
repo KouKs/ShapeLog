@@ -1,7 +1,4 @@
-import Route from './Http/Route'
-
-import User from './Database/Models/User'
-import Message from './Database/Models/Message'
+import Route from '@/Http/Route'
 
 export default [
 
@@ -11,15 +8,11 @@ export default [
   |
   */
 
-  Route.post('/', (req, res) => {
-    Message.find(1, (message) => {
-      message.user.first((user) => {
-        console.log(user)
-      })
-    })
-
-
-    res.send('Hello!')
+  Route.get('/', (req, res) => {
+    res.send([
+      { id: 1, name: 'asdf' },
+      { id: 2, name: 'asdfasdasd' }
+    ])
   })
 
 ]

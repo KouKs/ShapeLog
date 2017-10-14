@@ -12,4 +12,8 @@ export default [
     return str.length >= min
   })
 
+  Rule.make('max', (str, max) => {
+    return str.length <= min
+  })
+
 ]

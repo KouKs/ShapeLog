@@ -2,54 +2,36 @@
   "name": "shapelog-api",
   "version": "0.0.1",
   "description": "API backed for the ShapeLog app.",
-  "main": "dist",
+  "main": "dist/build.js",
   "scripts": {
-    "watch": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
-    "build": "babel src -s -D -d dist --presets es2015,stage-0",
-    "start": "node dist",
-    "prestart": "npm run -s build",
-    "test": "eslint src"
-  },
-  "eslintConfig": {
-    "extends": "eslint:recommended",
-    "parserOptions": {
-      "ecmaVersion": 7,
-      "sourceType": "module"
-    },
-    "env": {
-      "node": true
-    },
-    "rules": {
-      "no-console": 0,
-      "no-unused-vars": 1
-    }
+    "watch": "cross-env NODE_ENV=development webpack-dev-server --hot",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules && node ."
   },
   "author": "Pavel Koch <kouks@koch@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "compression": "^1.5.2",
-    "cors": "^2.7.1",
-    "express": "^4.13.3",
-    "morgan": "^1.8.0",
-    "resource-router-middleware": "^0.6.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.9.0",
-    "babel-core": "^6.9.0",
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-stage-0": "^6.5.0",
     "body-parser": "^1.18.2",
     "colors": "^1.1.2",
-    "eslint": "^3.1.1",
+    "dotenv": "^4.0.0",
+    "express": "^4.13.3",
     "lodash": "^4.17.4",
     "multer": "^1.3.0",
-    "mysql": "^2.15.0",
-    "nodemon": "^1.9.2"
+    "mysql": "^2.15.0"
   },
-  "bugs": {
-    "url": "https://github.com/developit/express-es6-rest-api/issues"
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.2",
+    "cross-env": "^5.0.5",
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1",
+    "webpack-node-externals": "^1.6.0"
   },
-  "homepage": "https://github.com/developit/express-es6-rest-api#readme",
   "keywords": [
     "shapelog",
     "api",

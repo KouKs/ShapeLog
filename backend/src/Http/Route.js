@@ -16,7 +16,7 @@ export default class Route {
     this.method = method
     this.path = path
     this.action = action
-    this.middlewareArray = []
+    this.middlewares = []
   }
 
   static get (path, action) {
@@ -55,14 +55,14 @@ export default class Route {
     return (new RouteGroup(args, callback)).resolve()
   }
 
-  middleware (middleware) {
-    this.middlewareArray.push(middleware)
+  middleware (Middleware) {
+    this.middlewares.push(Middleware)
 
     return this
   }
 
   resolve (app) {
-    return app[this.method](this.path, ... this.assembleRoute())
+    return app[this.method](this.path, ...this.assembleRoute())
   }
 
   assembleRoute () {
@@ -80,24 +80,24 @@ export default class Route {
   }
 
   resolveMiddleware (req, res, next) {
-    let middlewareChain = []
+    let middleware = []
 
-    _.flatten(this.middlewareArray).forEach((middleware) => {
-      middlewareChain.push((new middleware()).handle)
+    _.flatten(this.middlewares).forEach((Middleware) => {
+      middleware.push((new Middleware()).handle)
     })
 
-    return middlewareChain
+    return middleware
   }
 
   resolveClosureRoute () {
     return this.action
   }
 
-  resolveArrayRoute() {
-    let [controller, action] = this.action
+  resolveArrayRoute () {
+    let [Controller, action] = this.action
 
     return (req, res) => {
-      (new controller())[action](req, res)
+      (new Controller())[action](req, res)
     }
   }
 }

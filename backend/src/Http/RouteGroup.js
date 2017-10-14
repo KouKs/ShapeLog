@@ -11,7 +11,7 @@ export default class Route {
       if (this.args.prefix !== undefined) {
         route.path = `/${this.trimSlashes(this.args.prefix)}/${this.trimSlashes(route.path)}`
       }
-      
+
       if (this.args.middleware !== undefined) {
         route.middleware(this.args.middleware)
       }
@@ -20,7 +20,7 @@ export default class Route {
     })
   }
 
-  trimSlashes(str) {
+  trimSlashes (str) {
     return str.replace(/^\/?(.+)\/?$/, '$1')
   }
 }

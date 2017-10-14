@@ -1,9 +1,7 @@
 import http from 'http'
 import express from 'express'
-import config from '../config'
-import Kernel from './Http/Kernel'
+import Kernel from '@/Http/Kernel'
 import bodyParser from 'body-parser'
-import Connection from './Database/Connection'
 
 /*
 |
@@ -13,9 +11,9 @@ import Connection from './Database/Connection'
 
 const app = express()
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }))
 app.server = http.createServer(app)
-app.server.listen(8080)
+app.server.listen(3000)
 
 /*
 |

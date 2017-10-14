@@ -3,7 +3,7 @@ export default class UpdateQuery {
     return `INSERT INTO ${params.table} `
   }
 
-  getEscapedData(params) {
+  getEscapedData (params) {
     return []
   }
 }

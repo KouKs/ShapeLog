@@ -1,6 +1,6 @@
-import Builder from '../Query/Builder'
-import HasMany from '../Relationships/HasMany'
-import BelongsTo from '../Relationships/BelongsTo'
+import Builder from '@/Database/Query/Builder'
+import HasMany from '@/Database/Relationships/HasMany'
+import BelongsTo from '@/Database/Relationships/BelongsTo'
 
 export default class Model {
   get key () {

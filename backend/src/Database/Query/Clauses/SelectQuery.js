@@ -3,7 +3,7 @@ export default class SelectQuery {
     return `SELECT ${params.columns} FROM ${params.table} `
   }
 
-  getEscapedData(params) {
+  getEscapedData (params) {
     return []
   }
 }
