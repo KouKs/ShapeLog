@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import axios from 'axios'
-import config from 'config'
+import { api } from '@/helpers'
 
 export default class ResourceStore {
   static craft (name, store) {
@@ -18,9 +18,26 @@ export default class ResourceStore {
 
   static get actions () {
     return {
-      load ({ commit }) {
-        axios.get(`${config.api.url}`)
+      load ({ commit, state }) {
+        axios.get(api(state.resourceName))
           .then(response => commit('updateResources', response))
+      },
+
+      store ({ dispatch, commit, state }, data) {
+        axios.post(api(state.resourceName), data)
+          .then(response => dispatch('load'))
+          .catch(({ response }) => commit('setErrors', response))
+      },
+
+      update ({ dispatch, commit, state }, resource, data) {
+        axios.put(api(`${state.resourceName}/${resource.id}`), data)
+          .then(response => dispatch('load'))
+          .catch(({ response }) => commit('setErrors', response))
+      },
+
+      delete ({ dispatch, commit, state }, resource) {
+        axios.delete(api(`${state.resourceName}/${resource.id}`))
+          .then(response => dispatch('load'))
       }
     }
   }
@@ -31,8 +48,8 @@ export default class ResourceStore {
         state.resources = payload.data
       },
 
-      removeResource (state, payload) {
-        state.resources = state.resource.filter(resource => resource.id !== payload.id)
+      setErrors (state, payload) {
+        state.errors = payload.data.errors
       }
     }
   }
@@ -41,6 +58,18 @@ export default class ResourceStore {
     return {
       find: (state, getters) => (id) => {
         return state.resources.find(resource => resource.id === id)
+      },
+
+      all: (state, getters) => {
+        return state.resources
+      },
+
+      errors: (state, getters) => {
+        return state.errors
+      },
+
+      hasErrors: (state, getters) => {
+        return Boolean(Object.keys(getters.errors).length)
       }
     }
   }
@@ -48,7 +77,8 @@ export default class ResourceStore {
   static get state () {
     return {
       resourceName: this.resourceName,
-      resources: []
+      resources: [],
+      errors: {}
     }
   }
 }

@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import RouteGroup from './RouteGroup'
+import { trimSlashes } from '@/helpers'
 
 export default class Route {
   static get resourceRoutes () {
@@ -14,7 +15,7 @@ export default class Route {
 
   constructor (method, path, action) {
     this.method = method
-    this.path = path
+    this.path = `/${trimSlashes(path)}`
     this.action = action
     this.middlewares = []
   }

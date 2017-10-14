@@ -1,4 +1,4 @@
-import config from 'config'
+// import config from 'config'
 
 export default class SetHeaders {
   /**
@@ -10,7 +10,7 @@ export default class SetHeaders {
    * @return Closure
    */
   handle (req, res, next) {
-    res.header('Access-Control-Allow-Origin', config.client.location)
+    res.header('Access-Control-Allow-Origin', '*')
 
     return next()
   }

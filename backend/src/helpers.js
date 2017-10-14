@@ -20,3 +20,7 @@ export function env (key, empty) {
 
   return ''
 }
+
+export function trimSlashes (str) {
+  return str.replace(/^\/?(.+)\/?$/, '$1')
+}

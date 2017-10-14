@@ -20,7 +20,7 @@ export default class Validator {
   }
 
   resolveRules () {
-    this.definedRules = {};
+    this.definedRules = {}
 
     this.registerRules().forEach((rule) => {
       let [name, callback] = rule.resolve()
@@ -32,16 +32,24 @@ export default class Validator {
   validateRules (req) {
     this.errors = {}
 
-    return !Boolean(Object.keys(this.rules).filter((rule) => {
-      let [name, args] = this.rules[rule].split(':')
+    return !Object.keys(this.rules).filter((field) => {
+      this.errors[field] = []
 
-      if (this.definedRules[name](req.body[rule], ... args.split(','))) {
-        return false
-      }
+      return Boolean(this.rules[field].split('|').filter((rule) => {
+        return this.validateEachRule(req, field, rule)
+      }).length)
+    }).length
+  }
 
-      this.errors[rule] = this.messages[rule]
+  validateEachRule (req, field, rule) {
+    let [name, args] = rule.split(':')
 
-      return true
-    }).length)
+    if (this.definedRules[name](req.body[field] || '', ...args.split(','))) {
+      return false
+    }
+
+    this.errors[field].push(this.messages[field][name])
+
+    return true
   }
 }

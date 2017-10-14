@@ -1,10 +1,9 @@
 import _ from 'lodash'
-import SetHeaders from '@/Http/Middleware/SetHeaders'
 
 export default class Kernel {
   static get defaultMiddleware () {
     return [
-      SetHeaders
+      //
     ]
   }
 

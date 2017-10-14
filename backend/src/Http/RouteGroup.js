@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { trimSlashes } from '@/helpers'
 
 export default class Route {
   constructor (args, callback) {
@@ -9,7 +10,7 @@ export default class Route {
   resolve () {
     return _.flatten(this.callback()).map((route) => {
       if (this.args.prefix !== undefined) {
-        route.path = `/${this.trimSlashes(this.args.prefix)}/${this.trimSlashes(route.path)}`
+        route.path = `/${trimSlashes(this.args.prefix)}/${trimSlashes(route.path)}`
       }
 
       if (this.args.middleware !== undefined) {
@@ -18,9 +19,5 @@ export default class Route {
 
       return route
     })
-  }
-
-  trimSlashes (str) {
-    return str.replace(/^\/?(.+)\/?$/, '$1')
   }
 }
