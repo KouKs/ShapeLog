@@ -97,8 +97,8 @@ export default class Route {
   resolveArrayRoute () {
     let [Controller, action] = this.action
 
-    return (req, res) => {
-      (new Controller())[action](req, res)
+    return (req, res, next) => {
+      (new Controller())[action](req, res, next)
     }
   }
 }

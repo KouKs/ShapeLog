@@ -11,7 +11,7 @@
         <div class="column is-9">
           <breadcrumbs />
 
-          <router-view />
+          <slot />
         </div>
       </div>
     </div>

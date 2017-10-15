@@ -1,22 +1,23 @@
 <template>
-  <div>
-    {{ allTests }}
-    {{ testErrors }}
-  </div>
+  <layout-master>
+    <div>
+      {{ allTests }}
+      {{ testErrors }}
+    </div>
+  </layout-master>
 </template>
 
 <script>
 import resource from '@/mixins/resource'
+import LayoutMaster from '@/components/layouts/Master'
 
 export default {
+  components: { LayoutMaster },
+
   mixins: [resource('tests')],
 
   mounted () {
-    this.loadTests()
-
-    console.log(this.$auth)
-
-    // this.storeTest({ name: 'asaasdasdasdsasdd' })
+    console.log(this.$user)
   }
 }
 </script>

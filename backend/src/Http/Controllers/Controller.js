@@ -1,9 +1,9 @@
 export default class Controller {
-  setValidator (validator) {
-    this.validator = validator
+  setValidator (Validator) {
+    this.Validator = Validator
   }
 
   validate (req, res) {
-    return (new this.validator).passes(req, res)
+    return (new this.Validator()).passes(req, res)
   }
 }

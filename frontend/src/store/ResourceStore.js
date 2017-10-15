@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import axios from 'axios'
+import Vue from 'vue'
 import { api } from '@/helpers'
 
 export default class ResourceStore {
@@ -19,24 +19,24 @@ export default class ResourceStore {
   static get actions () {
     return {
       load ({ commit, state }) {
-        axios.get(api(state.resourceName))
+        Vue.axios.get(api(state.resourceName))
           .then(response => commit('updateResources', response))
       },
 
       store ({ dispatch, commit, state }, data) {
-        axios.post(api(state.resourceName), data)
+        Vue.axios.post(api(state.resourceName), data)
           .then(response => dispatch('load'))
           .catch(({ response }) => commit('setErrors', response))
       },
 
       update ({ dispatch, commit, state }, resource, data) {
-        axios.put(api(`${state.resourceName}/${resource.id}`), data)
+        Vue.axios.put(api(`${state.resourceName}/${resource.id}`), data)
           .then(response => dispatch('load'))
           .catch(({ response }) => commit('setErrors', response))
       },
 
       delete ({ dispatch, commit, state }, resource) {
-        axios.delete(api(`${state.resourceName}/${resource.id}`))
+        Vue.axios.delete(api(`${state.resourceName}/${resource.id}`))
           .then(response => dispatch('load'))
       }
     }
