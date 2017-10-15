@@ -1,16 +1,16 @@
 import config from 'config'
-import passport from 'passport'
+import Passport from 'passport'
 import User from '@/Database/Models/User'
 import { generateApiToken } from '@/helpers'
 import Controller from '@/Http/Controllers/Controller'
 
 export default class AuthController extends Controller {
   redirect (req, res, next) {
-    passport.authenticate(req.params.provider, { scope: 'email' })(req, res, next)
+    Passport.authenticate(req.params.provider, { scope: 'email' })(req, res, next)
   }
 
   callback (req, res, next) {
-    passport.authenticate(req.params.provider, (err, user) => {
+    Passport.authenticate(req.params.provider, (err, user) => {
       if (err) {
         return res.redirect(config.client.location)
       }

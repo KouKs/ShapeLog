@@ -3,5 +3,5 @@ import api from './api'
 import auth from './auth'
 
 export default {
-  app, api, auth
+  app, api
 }

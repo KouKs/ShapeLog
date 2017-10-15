@@ -17,7 +17,7 @@ export default {
   mixins: [resource('tests')],
 
   mounted () {
-    console.log(this.$user)
+    //
   }
 }
 </script>
