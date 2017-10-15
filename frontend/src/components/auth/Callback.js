@@ -1,5 +1,5 @@
 export default {
-  template: 'Redirecting...',
+  template: '<div>Redirecting...</div>',
 
   mounted () {
     this.$auth.login(

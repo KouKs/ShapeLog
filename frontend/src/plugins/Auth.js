@@ -4,10 +4,14 @@ import { api } from '@/helpers'
 class Auth {
   constructor (Vue) {
     this.Vue = Vue
+
+    this.setAuthorizationHeader()
   }
 
   login (token) {
     Cookie.set('api_token', token)
+
+    this.setAuthorizationHeader()
   }
 
   logout () {
@@ -20,6 +24,10 @@ class Auth {
         .then(response => resolve(response.data))
         .catch(({ response }) => reject(response))
     })
+  }
+
+  setAuthorizationHeader () {
+    this.Vue.axios.defaults.headers.common['Authorization'] = 'Bearer ' + Cookie.get('api_token')
   }
 }
 
