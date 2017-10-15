@@ -8,6 +8,10 @@ class Auth {
     this.setAuthorizationHeader()
   }
 
+  token () {
+    return Cookie.get('api_token')
+  }
+
   login (token) {
     Cookie.set('api_token', token)
 

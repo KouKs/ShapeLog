@@ -9,8 +9,6 @@
         </div>
 
         <div class="column is-9">
-          <breadcrumbs />
-
           <slot />
         </div>
       </div>
@@ -21,10 +19,9 @@
 <script>
 import Navbar from '@/components/partials/Navbar'
 import SideMenu from '@/components/partials/SideMenu'
-import Breadcrumbs from '@/components/partials/Breadcrumbs'
 
 export default {
-  components: { Navbar, SideMenu, Breadcrumbs }
+  components: { Navbar, SideMenu }
 }
 </script>
 

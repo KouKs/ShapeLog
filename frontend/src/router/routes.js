@@ -1,8 +1,10 @@
 import Route from './Route'
 import Feed from '@/components/Feed'
 import Login from '@/components/auth/Login'
-import Callback from '@/components/auth/Callback'
 import Authed from '@/router/Middleware/Authed'
+import Guest from '@/router/Middleware/Guest'
+import Callback from '@/components/auth/Callback'
+import FourOhFour from '@/components/errors/FourOhFour'
 
 export default [
 
@@ -20,7 +22,14 @@ export default [
   |
   */
 
-  Route.set('/auth/login', Login).name('login').get(),
-  Route.set('/auth/callback', Callback).name('callback').get()
+  Route.set('/auth/login', Login).name('login').middleware(Guest).get(),
+  Route.set('/auth/callback', Callback).name('callback').middleware(Guest).get(),
 
+  /*
+  |
+  | 404 Route.
+  |
+  */
+
+  Route.set('*', FourOhFour).get()
 ]

@@ -1,3 +1,4 @@
+<script>
 export default {
   template: '<div>Redirecting...</div>',
 
@@ -9,3 +10,4 @@ export default {
     this.$router.push({ name: 'home' })
   }
 }
+</script>
