@@ -19,24 +19,28 @@ export default class ResourceStore {
   static get actions () {
     return {
       load ({ commit, state }) {
-        Vue.axios.get(api(state.resourceName))
+        return Vue.axios.get(api(state.resourceName))
           .then(response => commit('updateResources', response))
       },
 
       store ({ dispatch, commit, state }, data) {
-        Vue.axios.post(api(state.resourceName), data)
+        commit('clearErrors')
+
+        return Vue.axios.post(api(state.resourceName), data)
           .then(response => dispatch('load'))
           .catch(({ response }) => commit('setErrors', response))
       },
 
-      update ({ dispatch, commit, state }, resource, data) {
-        Vue.axios.put(api(`${state.resourceName}/${resource.id}`), data)
+      update ({ dispatch, commit, state }, id, data) {
+        commit('clearErrors')
+
+        return Vue.axios.put(api(`${state.resourceName}/${id}`), data)
           .then(response => dispatch('load'))
           .catch(({ response }) => commit('setErrors', response))
       },
 
-      delete ({ dispatch, commit, state }, resource) {
-        Vue.axios.delete(api(`${state.resourceName}/${resource.id}`))
+      delete ({ dispatch, commit, state }, id) {
+        return Vue.axios.delete(api(`${state.resourceName}/${id}`))
           .then(response => dispatch('load'))
       }
     }
@@ -50,6 +54,10 @@ export default class ResourceStore {
 
       setErrors (state, payload) {
         state.errors = payload.data.errors
+      },
+
+      clearErrors (state) {
+        state.errors = {}
       }
     }
   }
@@ -68,8 +76,14 @@ export default class ResourceStore {
         return state.errors
       },
 
-      hasErrors: (state) => (field) => {
-        return Boolean(state.errors[field].length)
+      hasErrors: (state) => (field = false) => {
+        if (field) {
+          return Boolean(state.errors[field].length)
+        }
+
+        return Boolean(Object.keys(state.errors).filter((field) => {
+          return state.errors[field].length > 0
+        }).length)
       }
     }
   }

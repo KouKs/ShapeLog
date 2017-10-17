@@ -1,8 +1,9 @@
 import Route from './Route'
-import Feed from '@/components/Feed'
+import Feed from '@/components/feed/Index'
 import Login from '@/components/auth/Login'
-import Authed from '@/router/Middleware/Authed'
 import Guest from '@/router/Middleware/Guest'
+import Authed from '@/router/Middleware/Authed'
+import Profile from '@/components/profile/Index'
 import Callback from '@/components/auth/Callback'
 import FourOhFour from '@/components/errors/FourOhFour'
 
@@ -15,6 +16,7 @@ export default [
   */
 
   Route.set('/', Feed).name('home').middleware(Authed).get(),
+  Route.set('/@:user', Profile).name('profile').middleware(Authed).get(),
 
   /*
   |

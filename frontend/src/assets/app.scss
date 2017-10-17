@@ -1,3 +1,101 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+
 @import "variables";
 
 @import "node_modules/bulma/bulma";
+
+.navbar-item span.img {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 50%;
+  margin-right: 1rem;
+  overflow: hidden;
+}
+
+.card .card-template {
+  background: $primary;
+  padding: 1em;
+}
+
+img.is-round {
+  border-radius: 50%;
+  margin-right: 2em;
+}
+
+input.is-fading {
+  width: auto;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+
+  &:hover, &:focus {
+    background: white;
+    box-shadow: none;
+    border: none;
+  }
+}
+
+.template-form {
+  display: flex;
+
+  &-menu {
+    height: $template-form-height;
+    flex: 1;
+    border-right: 1px solid #dbdbdb;
+
+    li {
+      padding: 0.4em 0.75em;
+      cursor: pointer;
+
+      &:hover:not(.menu-label) {
+        background-color: whitesmoke;
+      }
+    }
+  }
+
+  &-body {
+    max-height: $template-form-height;
+    flex: 3;
+    overflow: auto;
+
+    .template-row {
+      &:not(:last-child) {
+        border-bottom: 1px solid whitesmoke;
+      }
+
+      &-header, &-body {
+        padding: 0.75em;
+      }
+
+      &-label {
+        color: $grey;
+      }
+
+      &-description {
+        color: $grey;
+        font-size: $size-7;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        padding-top: 7px;
+      }
+
+      &:hover {
+        background-color: #fafafa;
+      }
+    }
+  }
+
+  &-empty {
+    color: #7a7a7a;
+    letter-spacing: 0.1em;
+    cursor: default;
+    padding: 0.75em;
+  }
+}
+
+.drag-icon {
+  cursor: move !important;
+}
