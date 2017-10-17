@@ -1,5 +1,6 @@
 import config from 'config'
 import WithData from './Clauses/WithData'
+import WithJoin from './Clauses/WithJoin'
 import WithLimit from './Clauses/WithLimit'
 import WithOrder from './Clauses/WithOrder'
 import WithWhere from './Clauses/WithWhere'
@@ -18,6 +19,7 @@ export default class Builder {
       table: this.modelInstance.table,
       where: [],
       columns: '*',
+      join: false,
       limit: {
         skip: false,
         take: false
@@ -45,6 +47,12 @@ export default class Builder {
     return this.where(clause)
   }
 
+  join (table, on) {
+    this.params.join = { table, on }
+
+    return this
+  }
+
   orderBy (column, direction) {
     this.params.order = { column, direction }
 
@@ -66,55 +74,49 @@ export default class Builder {
   first (callback) {
     let [sql, escapedData] = this.buildSelect()
 
-    this.connection.query(sql, escapedData, (error, rows, fields) => {
-      this.handleError(error)
-
-      callback(rows.length ? this.model.newInstance().hydrate(rows.shift()) : null)
+    return new Promise((resolve) => {
+      this.performQuery(sql, escapedData, (results) => {
+        resolve(results.length ? this.model.newInstance().hydrate(results.shift()) : null)
+      })
     })
   }
 
-  get (callback) {
+  get () {
     let [sql, escapedData] = this.buildSelect()
 
-    this.connection.query(sql, escapedData, (error, rows, fields) => {
-      this.handleError(error)
-
-      callback(rows.map((row) => {
-        return this.model.newInstance().hydrate(row)
-      }))
+    return new Promise((resolve) => {
+      this.performQuery(sql, escapedData, (results) => {
+        resolve(results.map((result) => {
+          return this.model.newInstance().hydrate(result)
+        }))
+      })
     })
   }
 
-  update (data, callback) {
+  update (data) {
     this.params.data = data
 
     let [sql, escapedData] = this.buildUpdate()
 
     this.connection.query(sql, escapedData, (error, info) => {
       this.handleError(error)
-
-      if (callback !== undefined) {
-        callback(error, info)
-      }
     })
   }
 
-  insert (data, callback) {
+  insert (data) {
     this.params.data = data
 
     let [sql, escapedData] = this.buildInsert()
 
-    this.connection.query(sql, escapedData, (error, info) => {
-      this.handleError(error)
-
-      if (callback !== undefined) {
-        this.model.find(info.insertId, callback)
-      }
+    return new Promise((resolve) => {
+      this.performQuery(sql, escapedData, (results) => {
+        resolve(this.model.find(results.insertId))
+      })
     })
   }
 
   buildSelect () {
-    let query = new WithLimit(new WithOrder(new WithWhere(new SelectQuery())))
+    let query = new WithLimit(new WithOrder(new WithWhere(new WithJoin(new SelectQuery()))))
 
     return [query.getSql(this.params), query.getEscapedData(this.params)]
   }
@@ -129,6 +131,14 @@ export default class Builder {
     let query = (new WithData(new InsertQuery()))
 
     return [query.getSql(this.params), query.getEscapedData(this.params)]
+  }
+
+  performQuery (sql, escapedData, callback) {
+    this.connection.query(sql, escapedData, (error, results) => {
+      this.handleError(error)
+
+      callback(results)
+    })
   }
 
   handleError (error) {

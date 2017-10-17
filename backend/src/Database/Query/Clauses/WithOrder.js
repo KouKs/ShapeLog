@@ -6,6 +6,6 @@ export default class WithOrder extends QueryDecorator {
   }
 
   build (params) {
-    return ` ORDER BY ${params.order.column} ${params.order.direction.toUpperCase()} `
+    return ` ORDER BY ${params.table}.${params.order.column} ${params.order.direction.toUpperCase()} `
   }
 }

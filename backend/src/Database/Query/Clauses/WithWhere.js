@@ -19,7 +19,7 @@ export default class WithWhere extends QueryDecorator {
   build (params) {
     return 'WHERE ' + params.where.map((where) => {
       let parts = Object.keys(where).map((col) => {
-        return `${col} = ?`
+        return `${params.table}.${col} = ?`
       })
 
       return `( ${parts.join(' AND ')} )`

@@ -19,20 +19,20 @@ export default class Model {
     return new Builder(this)
   }
 
-  static all (callback) {
-    return this.q.get(callback)
+  static all () {
+    return this.q.get()
   }
 
-  static find (id, callback) {
-    return this.q.where({ id }).first(callback)
+  static find (id) {
+    return this.q.where({ id }).first()
   }
 
-  static create (data, callback) {
-    return this.q.insert(data, callback)
+  static create (data) {
+    return this.q.insert(data)
   }
 
-  update (data, callback) {
-    return this.constructor.q.where({ id: this.id }).update(data, callback)
+  update (data) {
+    return this.constructor.q.where({ id: this.id }).update(data)
   }
 
   belongsTo (model) {

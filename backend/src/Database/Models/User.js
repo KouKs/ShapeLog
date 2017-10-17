@@ -1,16 +1,12 @@
 import Model from './Model'
-import Message from './Message'
+import Template from './Template'
 
 export default class User extends Model {
   get table () {
     return 'users'
   }
 
-  get fillable () {
-    return ['name']
-  }
-
-  get messages () {
-    return this.hasMany(Message)
+  get templates () {
+    return this.hasMany(Template)
   }
 }

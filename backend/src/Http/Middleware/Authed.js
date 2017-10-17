@@ -16,14 +16,15 @@ export default class Authed {
 
     let token = req.headers.authorization.split(' ')[1]
 
-    User.q.where({ api_token: token }).first((user) => {
-      if (!user) {
-        return res.status(401).send({ error: 'Invalid API Token.' })
-      }
+    User.q.where({ api_token: token }).first()
+      .then((user) => {
+        if (!user) {
+          return res.status(401).send({ error: 'Invalid API Token.' })
+        }
 
-      req.user = user
+        req.user = user
 
-      next()
-    })
+        next()
+      })
   }
 }
