@@ -12,10 +12,16 @@ export default ResourceStore.craft('templates', {
   },
 
   mutations: {
+    updateResources (state, payload) {
+      state.resources = payload.data.map(template => _.merge(template, { rows: [] }))
+    },
+
     assignRows (state, payload) {
+      let rows = payload.data.map(row => _.merge(row, { data: JSON.parse(row.data) }))
+
       state.resources = state.resources.map((template) => {
         return _.merge(template, {
-          rows: payload.data.filter(row => row.template_id === template.id)
+          rows: rows.filter(row => row.template_id === template.id)
         })
       })
     }

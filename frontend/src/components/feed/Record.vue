@@ -1,7 +1,17 @@
 <template>
-  <div class="card">
-    <div class="card-template">
-      <!--  -->
+  <div class="card mb-1">
+    <div
+      class="template-filled"
+      :style="{ background: record.background, color: record.text}"
+      v-show="JSON.parse(record.template_data).length"
+    >
+      <div
+        class="template-filled-row"
+        v-for="row in JSON.parse(record.template_data)"
+      >
+        <div>{{ row.label }}</div>
+        <div>{{ row.value }} {{ row.unit || '' }}</div>
+      </div>
     </div>
     <div class="card-content">
       <div class="media">
@@ -12,23 +22,43 @@
         </div>
         <div class="media-content">
           <p class="title is-4">{{ $user.first_name }}</p>
-          <p class="subtitle is-6">@{{ $user.username }}</p>
+          <p class="subtitle is-6">
+            <router-link :to="`/@${$user.username}`">@{{ $user.username }}</router-link>
+          </p>
+        </div>
+        <div class="media-actions is-pulled-right" v-show="$user.id === record.user_id">
+          <span class="icon">
+            <i class="fa fa-times" aria-hidden="true" @click="deleteRecord(record.id)"></i>
+          </span>
         </div>
       </div>
 
       <div class="content">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-        <a href="#">#css</a> <a href="#">#responsive</a>
+        {{ record.description }}
         <br>
-        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+        <small><time :datetime="record.created_at">{{ parsedDate }}</time></small>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import { parseDate } from '@/helpers'
+
 export default {
-  //
+  props: ['record'],
+
+  computed: {
+    parsedDate () {
+      return parseDate(this.record.created_at)
+    }
+  },
+
+  methods: {
+    ...mapActions('records', {
+      deleteRecord: 'delete'
+    })
+  }
 }
 </script>

@@ -35,6 +35,10 @@ export default class Model {
     return this.constructor.q.where({ id: this.id }).update(data)
   }
 
+  delete () {
+    return this.constructor.q.where({ id: this.id }).delete()
+  }
+
   belongsTo (model) {
     return new BelongsTo(this, model)
   }

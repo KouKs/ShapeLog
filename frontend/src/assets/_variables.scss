@@ -41,3 +41,10 @@ i.fa {
     color: rgba(10, 10, 10, 0.3);
   }
 }
+
+.m {
+  &b {
+    &-1 { margin-bottom: 10px; }
+    &-2 { margin-bottom: 20px; }
+  }
+}

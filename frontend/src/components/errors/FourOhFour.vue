@@ -5,13 +5,10 @@
 </template>
 
 <script>
-import resource from '@/mixins/resource'
 import LayoutEmpty from '@/components/layouts/Empty'
 
 export default {
   components: { LayoutEmpty },
-
-  mixins: [resource('tests')],
 
   mounted () {
     //

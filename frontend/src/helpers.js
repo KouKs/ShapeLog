@@ -16,6 +16,8 @@ export function singular (str) {
   return str.slice(0, str.length - 1)
 }
 
-export function redirect (url) {
-  window.location.href = url
+export function parseDate (str) {
+  let date = new Date(str)
+
+  return `${date.getDate()}. ${date.getMonth()}. ${date.getHours()}:${date.getMinutes()}`
 }

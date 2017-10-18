@@ -52,9 +52,9 @@ export default class TemplateController extends Controller {
           data: JSON.stringify(row.data)
         })
       })
-    })
 
-    res.send('ok')
+      res.sendStatus(201)
+    })
   }
 
   /**
@@ -76,7 +76,35 @@ export default class TemplateController extends Controller {
    * @return void
    */
   update (req, res) {
-    //
+    if (!this.validate(req, res)) {
+      return
+    }
+
+    Template.find(req.params.template)
+      .then((template) => {
+        if (req.user.id !== template.user_id) {
+          return res.status(401).send({ error: 'This action is unauthorized.' })
+        }
+
+        template.update({
+          name: req.body.name,
+          text: req.body.text,
+          background: req.body.background
+        })
+
+        return template.rows.delete()
+      })
+      .then(() => {
+        req.body.rows.forEach((row) => {
+          TemplateRow.create({
+            template_id: req.params.template,
+            type: row.type,
+            data: JSON.stringify(row.data)
+          })
+        })
+
+        res.sendStatus(202)
+      })
   }
 
   /**
@@ -87,7 +115,17 @@ export default class TemplateController extends Controller {
    * @return void
    */
   destroy (req, res) {
-    //
+    Template.find(req.params.template)
+      .then((template) => {
+        if (req.user.id !== template.user_id) {
+          return res.status(401).send({ error: 'This action is unauthorized.' })
+        }
+
+        return template.delete()
+      })
+      .then(() => {
+        res.sendStatus(202)
+      })
   }
 
   /**
@@ -100,6 +138,7 @@ export default class TemplateController extends Controller {
   rows (req, res) {
     req.user.templates.select('template_rows.*')
       .join('template_rows', 'templates.id = template_rows.template_id')
+      .orderBy('template_rows.id', 'desc')
       .get().then((rows) => {
         res.send(rows)
       })

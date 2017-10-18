@@ -4,7 +4,7 @@
       General
     </p>
     <ul class="menu-list">
-      <li><a>Profile</a></li>
+      <li><router-link :to="`/@${$user.username}`">Profile</router-link></li>
       <li><a class="is-active">Feed</a></li>
     </ul>
     <p class="menu-label">

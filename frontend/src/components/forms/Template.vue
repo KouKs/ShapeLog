@@ -10,11 +10,11 @@
       </header>
 
       <section class="modal-card-body section">
-        <div class="template-form">
-          <ul class="template-form-menu">
+        <div class="split">
+          <ul class="split-menu">
             <li class="menu-label">Presets</li>
-            <li @click="addRow('bmr')">BMR</li>
-            <li @click="addRow('bmi')">BMI</li>
+<!--             <li @click="addRow('bmr')">BMR</li>
+            <li @click="addRow('bmi')">BMI</li> -->
             <li @click="addRow('label-value')">Label - Value</li>
             <hr class="divider"></hr>
             <li class="menu-label">Colors</li>
@@ -28,7 +28,7 @@
             </li>
           </ul>
 
-          <div class="template-form-body">
+          <div class="split-body">
             <draggable :list="form.rows">
               <template-row
                 v-for="row in form.rows"
@@ -40,14 +40,14 @@
 
             <p
               v-show="form.rows.length === 0"
-              class="template-form-empty"
+              class="split-empty"
             >Choose a preset from the menu.</p>
           </div>
         </div>
       </section>
 
       <footer class="modal-card-foot">
-        <button class="button is-primary" @click.prevent="$emit('save', form)">Save</button>
+        <button class="button is-primary" @click.prevent="$emit('submit', form)">Save</button>
         <button class="button" @click.prevent="$emit('close')">Cancel</button>
       </footer>
     </div>
@@ -71,6 +71,7 @@ export default {
     return {
       colorPresets: [
         { background: '#b23432', text: '#fff' },
+        { background: '#00d1b2', text: '#fff' },
         { background: '#fff', text: '#000' }
       ]
     }

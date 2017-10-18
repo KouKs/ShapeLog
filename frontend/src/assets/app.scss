@@ -15,11 +15,6 @@
   overflow: hidden;
 }
 
-.card .card-template {
-  background: $primary;
-  padding: 1em;
-}
-
 img.is-round {
   border-radius: 50%;
   margin-right: 2em;
@@ -38,7 +33,7 @@ input.is-fading {
   }
 }
 
-.template-form {
+.split{
   display: flex;
 
   &-menu {
@@ -98,4 +93,66 @@ input.is-fading {
 
 .drag-icon {
   cursor: move !important;
+}
+
+.panel-block.has-actions {
+  justify-content: space-between;
+}
+
+.new-record-trigger, .new-record-trigger:hover, .new-record-trigger:focus {
+  border: none;
+  resize: none;
+  border-radius: 0;
+  background: white;
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+}
+
+textarea.plain {
+  &, &:hover, &:focus {
+    border: none;
+    box-shadow: none;
+    resize: none;
+    background: transparent;
+  }
+}
+
+.template-filling {
+  background: $primary;
+  padding: 1em;
+  border-bottom: 1px solid #dbdbdb;
+
+  &-row {
+    display: flex;
+    align-items: center;
+
+    div {
+      flex: 2;
+      padding: 0.7em 2em;
+    }
+
+    div:first-child {
+      flex: 1;
+      text-align: right;
+    }
+  }
+}
+
+.template-filled {
+  padding: 1em;
+  border-bottom: 1px solid #dbdbdb;
+
+  &-row {
+    display: flex;
+    align-items: center;
+
+    div {
+      flex: 1;
+      padding: 0.7em 2em;
+    }
+
+    div:first-child {
+      font-weight: bold;
+      text-align: right;
+    }
+  }
 }

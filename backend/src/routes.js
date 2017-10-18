@@ -2,6 +2,7 @@ import Route from '@/Http/Route'
 import Authed from '@/Http/Middleware/Authed'
 import AuthController from '@/Http/Controllers/Auth/AuthController'
 import TemplateController from '@/Http/Controllers/TemplateController'
+import RecordController from '@/Http/Controllers/RecordController'
 
 export default [
 
@@ -15,7 +16,9 @@ export default [
     Route.get('user', (req, res) => res.send(req.user)),
 
     Route.get('templates/rows', [TemplateController, 'rows']),
-    Route.resource('template', TemplateController)
+    Route.resource('template', TemplateController),
+
+    Route.resource('record', RecordController)
   ]),
 
   /*

@@ -5,6 +5,7 @@ import WithLimit from './Clauses/WithLimit'
 import WithOrder from './Clauses/WithOrder'
 import WithWhere from './Clauses/WithWhere'
 import Connection from '@/Database/Connection'
+import DeleteQuery from './Clauses/DeleteQuery'
 import InsertQuery from './Clauses/InsertQuery'
 import SelectQuery from './Clauses/SelectQuery'
 import UpdateQuery from './Clauses/UpdateQuery'
@@ -115,6 +116,16 @@ export default class Builder {
     })
   }
 
+  delete () {
+    let [sql, escapedData] = this.buildDelete()
+
+    return new Promise((resolve) => {
+      this.performQuery(sql, escapedData, (results) => {
+        resolve(results)
+      })
+    })
+  }
+
   buildSelect () {
     let query = new WithLimit(new WithOrder(new WithWhere(new WithJoin(new SelectQuery()))))
 
@@ -129,6 +140,12 @@ export default class Builder {
 
   buildInsert () {
     let query = (new WithData(new InsertQuery()))
+
+    return [query.getSql(this.params), query.getEscapedData(this.params)]
+  }
+
+  buildDelete () {
+    let query = (new WithWhere(new DeleteQuery()))
 
     return [query.getSql(this.params), query.getEscapedData(this.params)]
   }

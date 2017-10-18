@@ -31,10 +31,10 @@ export default class ResourceStore {
           .catch(({ response }) => commit('setErrors', response))
       },
 
-      update ({ dispatch, commit, state }, id, data) {
+      update ({ dispatch, commit, state }, data) {
         commit('clearErrors')
 
-        return Vue.axios.put(api(`${state.resourceName}/${id}`), data)
+        return Vue.axios.put(api(`${state.resourceName}/${data.id}`), data)
           .then(response => dispatch('load'))
           .catch(({ response }) => commit('setErrors', response))
       },

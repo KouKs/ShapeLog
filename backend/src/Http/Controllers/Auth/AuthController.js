@@ -20,13 +20,14 @@ export default class AuthController extends Controller {
   }
 
   handleCallback (socialUser, res) {
-    User.q.where({ provider_id: socialUser.id }).first((user) => {
-      if (!user) {
-        return this.createUser(socialUser, res)
-      }
+    User.q.where({ provider_id: socialUser.id }).first()
+      .then((user) => {
+        if (!user) {
+          return this.createUser(socialUser, res)
+        }
 
-      return this.sendResponse(user.api_token, res)
-    })
+        return this.sendResponse(user.api_token, res)
+      })
   }
 
   createUser (socialUser, res) {
@@ -38,7 +39,7 @@ export default class AuthController extends Controller {
       last_name: socialUser.name.familyName,
       avatar: socialUser.photos[0].value,
       api_token: generateApiToken(60)
-    }, (user) => {
+    }).then((user) => {
       return this.sendResponse(user.api_token, res)
     })
   }

@@ -1,8 +1,12 @@
 <template>
   <div class="template-row">
     <header class="template-row-header">
-      <i class="fa fa-bars drag-icon" aria-hidden="true"></i>
-      <i class="fa fa-times is-pulled-right" aria-hidden="true" @click="$emit('remove', row)"></i>
+      <span class="icon">
+        <i class="fa fa-bars drag-icon" aria-hidden="true"></i>
+      </span>
+      <span class="icon is-pulled-right">
+        <i class="fa fa-times" aria-hidden="true" @click="$emit('remove', row)"></i>
+      </span>
     </header>
 
     <section class="template-row-body" v-if="row.type === 'label-value'">
@@ -18,7 +22,6 @@
         class="input is-fading"
         placeholder="Unit (optional)"
       >
-      <p class="template-row-description">Choose a label and optionally an unit. Fill in the data when creating a post.</p>
     </section>
 
     <section class="template-row-body" v-else-if="row.type === 'bmi'">

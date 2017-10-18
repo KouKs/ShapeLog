@@ -31,7 +31,7 @@
                 Settings
               </a>
               <hr class="navbar-divider"></hr>
-              <a class="navbar-item">
+              <a class="navbar-item" @click="logout()">
                 Logout
               </a>
              </div>
@@ -44,6 +44,11 @@
 
 <script>
 export default {
-  //
+  methods: {
+    logout () {
+      this.$auth.logout()
+      this.$router.push({ name: 'login' })
+    }
+  }
 }
 </script>
