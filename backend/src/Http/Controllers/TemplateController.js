@@ -1,5 +1,4 @@
 import Controller from './Controller'
-import Template from '@/Database/Models/Template'
 import TemplateRow from '@/Database/Models/TemplateRow'
 import TemplateValidator from '@/Http/Validators/TemplateValidator'
 
@@ -23,7 +22,7 @@ export default class TemplateController extends Controller {
    * @return void
    */
   index (req, res) {
-    req.user.templates.get()
+    req.user.$relatedQuery('templates').eager('rows')
       .then((templates) => res.send(templates))
   }
 
@@ -39,20 +38,18 @@ export default class TemplateController extends Controller {
       return
     }
 
-    Template.create({
-      user_id: req.user.id,
+    req.user.$relatedQuery('templates').insertGraph({
       name: req.body.name,
       text: req.body.text,
-      background: req.body.background
-    }).then((template) => {
-      req.body.rows.forEach((row) => {
-        TemplateRow.create({
-          template_id: template.id,
+      background: req.body.background,
+
+      rows: req.body.rows.map((row) => {
+        return {
           type: row.type,
           data: JSON.stringify(row.data)
-        })
+        }
       })
-
+    }).then(() => {
       res.sendStatus(201)
     })
   }
@@ -80,29 +77,31 @@ export default class TemplateController extends Controller {
       return
     }
 
-    Template.find(req.params.template)
-      .then((template) => {
-        if (req.user.id !== template.user_id) {
+    req.user.$relatedQuery('templates')
+      .findById(req.params.template)
+      .update({
+        name: req.body.name,
+        text: req.body.text,
+        background: req.body.background
+      })
+      .then((rowsCount) => {
+        if (rowsCount === 0) {
           return res.status(401).send({ error: 'This action is unauthorized.' })
         }
 
-        template.update({
-          name: req.body.name,
-          text: req.body.text,
-          background: req.body.background
-        })
-
-        return template.rows.delete()
+        return TemplateRow.q.where('template_id', req.params.template)
+          .delete()
       })
-      .then(() => {
-        req.body.rows.forEach((row) => {
-          TemplateRow.create({
+      .then((count) => {
+        return req.body.rows.forEach((row) => {
+          return TemplateRow.q.insert({
             template_id: req.params.template,
             type: row.type,
             data: JSON.stringify(row.data)
-          })
+          }).then(() => {})
         })
-
+      })
+      .then(() => {
         res.sendStatus(202)
       })
   }
@@ -115,32 +114,15 @@ export default class TemplateController extends Controller {
    * @return void
    */
   destroy (req, res) {
-    Template.find(req.params.template)
-      .then((template) => {
-        if (req.user.id !== template.user_id) {
+    req.user.$relatedQuery('templates')
+      .where('id', req.params.template)
+      .delete()
+      .then((rowsCount) => {
+        if (rowsCount === 0) {
           return res.status(401).send({ error: 'This action is unauthorized.' })
         }
 
-        return template.delete()
-      })
-      .then(() => {
-        res.sendStatus(202)
-      })
-  }
-
-  /**
-   * Loads all rows for templates.
-   *
-   * @param  Request  req
-   * @param  Response res
-   * @return void
-   */
-  rows (req, res) {
-    req.user.templates.select('template_rows.*')
-      .join('template_rows', 'templates.id = template_rows.template_id')
-      .orderBy('template_rows.id', 'desc')
-      .get().then((rows) => {
-        res.send(rows)
+        return res.sendStatus(202)
       })
   }
 }

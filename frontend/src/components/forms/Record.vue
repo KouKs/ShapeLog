@@ -90,13 +90,11 @@ export default {
 
   mounted () {
     this.loadTemplates()
-      .then(() => this.loadTemplateRows())
   },
 
   methods: {
     ...mapActions('templates', {
-      loadTemplates: 'load',
-      loadTemplateRows: 'loadTemplateRows'
+      loadTemplates: 'load'
     }),
 
     selectTemplate (template) {

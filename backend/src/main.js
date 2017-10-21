@@ -1,11 +1,21 @@
 import cors from 'cors'
 import http from 'http'
+import knex from 'knex'
 import config from 'config'
 import express from 'express'
 import Passport from 'passport'
+import { Model } from 'objection'
 import Kernel from '@/Http/Kernel'
 import bodyParser from 'body-parser'
 import FacebookStrategy from 'passport-facebook'
+
+/*
+|
+| Setup database connection
+|
+*/
+
+Model.knex(knex(config.database))
 
 /*
 |

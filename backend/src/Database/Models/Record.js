@@ -1,12 +1,21 @@
 import User from './User'
-import Model from './Model'
+import Model from '@/Database/Model'
 
 export default class Record extends Model {
-  get table () {
+  static get table () {
     return 'records'
   }
 
-  get user () {
-    return this.belongsTo(User)
+  static get relationMappings () {
+    return {
+      user: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: User,
+        join: {
+          from: 'records.user_id',
+          to: 'users.id'
+        }
+      }
+    }
   }
 }

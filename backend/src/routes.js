@@ -15,9 +15,7 @@ export default [
   Route.group({ middleware: Authed }, () => [
     Route.get('user', (req, res) => res.send(req.user)),
 
-    Route.get('templates/rows', [TemplateController, 'rows']),
     Route.resource('template', TemplateController),
-
     Route.resource('record', RecordController)
   ]),
 
@@ -36,4 +34,5 @@ export default [
   |
   */
 
+  //
 ]

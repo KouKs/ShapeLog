@@ -69,7 +69,6 @@ export default {
 
   mounted () {
     this.loadTemplates()
-      .then(() => this.loadTemplateRows())
   },
 
   methods: {
@@ -77,8 +76,7 @@ export default {
       loadTemplates: 'load',
       storeTemplate: 'store',
       deleteTemplate: 'delete',
-      updateTemplate: 'update',
-      loadTemplateRows: 'loadTemplateRows'
+      updateTemplate: 'update'
     }),
 
     toggleModal (id = 0) {
@@ -115,8 +113,6 @@ export default {
       this.toggleModal()
 
       this.resetFormData()
-
-      this.loadTemplateRows()
     }
   }
 }

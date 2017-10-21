@@ -14,9 +14,7 @@ export default class Authed {
       return res.status(401).send({ error: 'Invalid API Token.' })
     }
 
-    let token = req.headers.authorization.split(' ')[1]
-
-    User.q.where({ api_token: token }).first()
+    User.q.where('api_token', req.headers.authorization.split(' ')[1]).first()
       .then((user) => {
         if (!user) {
           return res.status(401).send({ error: 'Invalid API Token.' })

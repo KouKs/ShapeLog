@@ -1,17 +1,30 @@
 import User from './User'
-import Model from './Model'
 import TemplateRow from './TemplateRow'
+import Model from '@/Database/Model'
 
 export default class Template extends Model {
-  get table () {
+  static get table () {
     return 'templates'
   }
 
-  get user () {
-    return this.belongsTo(User)
-  }
-
-  get rows () {
-    return this.hasMany(TemplateRow)
+  static get relationMappings () {
+    return {
+      user: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: User,
+        join: {
+          from: 'templates.user_id',
+          to: 'users.id'
+        }
+      },
+      rows: {
+        relation: Model.HasManyRelation,
+        modelClass: TemplateRow,
+        join: {
+          from: 'templates.id',
+          to: 'template_rows.template_id'
+        }
+      }
+    }
   }
 }

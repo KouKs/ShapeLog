@@ -22,7 +22,8 @@ export default class TemplateController extends Controller {
    * @return void
    */
   index (req, res) {
-    Record.q.orderBy('id', 'desc').get()
+    Record.q.orderBy('records.id', 'desc')
+      .eager('user')
       .then((records) => res.send(records))
   }
 
@@ -38,15 +39,16 @@ export default class TemplateController extends Controller {
       return
     }
 
-    Record.create({
-      user_id: req.user.id,
-      description: req.body.description,
-      background: req.body.background,
-      text: req.body.text,
-      template_data: JSON.stringify(req.body.template_data)
-    })
-
-    res.sendStatus(201)
+    req.user.$relatedQuery('records')
+      .insert({
+        description: req.body.description,
+        background: req.body.background,
+        text: req.body.text,
+        template_data: JSON.stringify(req.body.template_data)
+      })
+      .then(() => {
+        return res.sendStatus(201)
+      })
   }
 
   /**
@@ -79,16 +81,15 @@ export default class TemplateController extends Controller {
    * @return void
    */
   destroy (req, res) {
-    Record.find(req.params.record)
-      .then((record) => {
-        if (req.user.id !== record.user_id) {
+    req.user.$relatedQuery('records')
+      .where('id', req.params.record)
+      .delete()
+      .then((rowsCount) => {
+        if (rowsCount === 0) {
           return res.status(401).send({ error: 'This action is unauthorized.' })
         }
 
-        return record.delete()
-      })
-      .then(() => {
-        res.sendStatus(202)
+        return res.sendStatus(202)
       })
   }
 }

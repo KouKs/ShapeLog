@@ -1,12 +1,21 @@
-import Model from './Model'
 import Template from './Template'
+import Model from '@/Database/Model'
 
 export default class TemplateRow extends Model {
-  get table () {
+  static get table () {
     return 'template_rows'
   }
 
-  get template () {
-    return this.belongsTo(Template)
+  static get relationMappings () {
+    return {
+      template: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Template,
+        join: {
+          from: 'template_rows.template_id',
+          to: 'templates.id'
+        }
+      }
+    }
   }
 }

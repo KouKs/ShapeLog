@@ -17,16 +17,16 @@
       <div class="media">
         <div class="media-left">
           <figure class="image is-48x48">
-            <img :src="$user.avatar" alt="Placeholder image">
+            <img :src="record.user.avatar" alt="Placeholder image">
           </figure>
         </div>
         <div class="media-content">
-          <p class="title is-4">{{ $user.first_name }}</p>
+          <p class="title is-4">{{ record.user.first_name }}</p>
           <p class="subtitle is-6">
-            <router-link :to="`/@${$user.username}`">@{{ $user.username }}</router-link>
+            <router-link :to="`/@${record.user.username}`">@{{ record.user.username }}</router-link>
           </p>
         </div>
-        <div class="media-actions is-pulled-right" v-show="$user.id === record.user_id">
+        <div class="media-actions is-pulled-right" v-show="record.user.id === $user.id">
           <span class="icon">
             <i class="fa fa-times" aria-hidden="true" @click="deleteRecord(record.id)"></i>
           </span>

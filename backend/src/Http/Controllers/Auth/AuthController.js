@@ -20,7 +20,8 @@ export default class AuthController extends Controller {
   }
 
   handleCallback (socialUser, res) {
-    User.q.where({ provider_id: socialUser.id }).first()
+    User.q.where('provider_id', socialUser.id)
+      .first()
       .then((user) => {
         if (!user) {
           return this.createUser(socialUser, res)
@@ -31,7 +32,7 @@ export default class AuthController extends Controller {
   }
 
   createUser (socialUser, res) {
-    User.create({
+    User.q.insert({
       provider_id: socialUser.id,
       username: this.getUsername(socialUser),
       first_name: socialUser.name.givenName,
