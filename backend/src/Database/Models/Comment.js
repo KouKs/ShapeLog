@@ -1,10 +1,10 @@
 import User from './User'
-import Comment from './Comment'
+import Record from './Record'
 import Model from '@/Database/Model'
 
-export default class Record extends Model {
+export default class Comment extends Model {
   static get table () {
-    return 'records'
+    return 'comments'
   }
 
   static get relationMappings () {
@@ -13,16 +13,16 @@ export default class Record extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'records.user_id',
+          from: 'comments.user_id',
           to: 'users.id'
         }
       },
-      comments: {
-        relation: Model.HasManyRelation,
-        modelClass: Comment,
+      record: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Record,
         join: {
-          from: 'records.id',
-          to: 'comments.record_id'
+          from: 'comments.record_id',
+          to: 'records.id'
         }
       }
     }

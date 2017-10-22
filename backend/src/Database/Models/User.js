@@ -1,4 +1,5 @@
 import Record from './Record'
+import Comment from './Comment'
 import Template from './Template'
 import Model from '@/Database/Model'
 
@@ -23,6 +24,14 @@ export default class User extends Model {
         join: {
           from: 'users.id',
           to: 'templates.user_id'
+        }
+      },
+      comments: {
+        relation: Model.HasManyRelation,
+        modelClass: Comment,
+        join: {
+          from: 'users.id',
+          to: 'comments.user_id'
         }
       }
     }

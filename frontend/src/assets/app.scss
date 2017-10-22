@@ -156,3 +156,22 @@ textarea.plain {
     }
   }
 }
+
+.navbar-dropdown.is-active {
+  display: block;
+}
+
+.record-comments {
+  border-top: 1px solid #dbdbdb;
+  background: whitesmoke;
+
+  .comment {
+    padding: 0.7em 1em;
+    display: flex;
+    align-items: flex-start;
+
+    p {
+      flex: 1;
+    }
+  }
+}

@@ -21,7 +21,7 @@
           </figure>
         </div>
         <div class="media-content">
-          <p class="title is-4">{{ record.user.first_name }}</p>
+          <p class="title is-4">{{ record.user.first_name }} {{ record.user.last_name }}</p>
           <p class="subtitle is-6">
             <router-link :to="`/@${record.user.username}`">@{{ record.user.username }}</router-link>
           </p>
@@ -36,18 +36,26 @@
       <div class="content">
         {{ record.description }}
         <br>
-        <small><time :datetime="record.created_at">{{ parsedDate }}</time></small>
+        <small>
+          <span class="icon"><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
+          <time :datetime="record.created_at">{{ parsedDate }}</time>
+        </small>
       </div>
     </div>
+
+    <comments :record="record"/>
   </div>
 </template>
 
 <script>
+import Comments from './Comments'
 import { mapActions } from 'vuex'
 import { parseDate } from '@/helpers'
 
 export default {
   props: ['record'],
+
+  components: { Comments },
 
   computed: {
     parsedDate () {

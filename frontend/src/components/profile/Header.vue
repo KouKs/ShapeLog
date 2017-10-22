@@ -4,22 +4,22 @@
       <div class="container">
         <nav class="level">
           <div class="level-item has-text-centered">
-            <img :src="$user.avatar" class="is-round">
+            <img :src="user.avatar" class="is-round">
 
             <div class="pl-1">
-              <p class="heading">@{{ $user.username }}</p>
-              <p class="title">{{ $user.first_name }} {{ $user.last_name }}</p>
+              <p class="heading">@{{ user.username }}</p>
+              <p class="title">{{ user.first_name }} {{ user.last_name }}</p>
             </div>
           </div>
 
           <div class="level-item has-text-centered">
             <div>
-              <p class="heading">Posts</p>
-              <p class="title">1</p>
+              <p class="heading">Recodrs</p>
+              <p class="title">{{ records.length }}</p>
            </div>
           </div>
 
-          <div class="level-item has-text-centered">
+<!--           <div class="level-item has-text-centered">
             <div>
               <p class="heading">Followers</p>
               <p class="title">120</p>
@@ -31,7 +31,7 @@
               <p class="heading">Following</p>
               <p class="title">121</p>
             </div>
-          </div>
+          </div> -->
         </nav>
       </div>
     </div>
@@ -40,6 +40,9 @@
 
 <script>
 export default {
-  //
+  props: {
+    user: Object,
+    records: Array
+  }
 }
 </script>

@@ -5,25 +5,24 @@
         <router-link class="navbar-item brand-text" to="/">
           ShapeLog
         </router-link>
-        <div class="navbar-burger burger" data-target="navMenu">
+        <div class="navbar-burger burger" @click="toggleMenu()">
           <span></span>
           <span></span>
           <span></span>
         </div>
       </div>
-      <div id="navMenu" class="navbar-menu">
+      <div :class="['navbar-menu', activeClass]">
         <div class="navbar-start">
-          <a class="navbar-item">
-            Search
-          </a>
+          <search />
         </div>
         <div class="navbar-end">
           <router-link class="navbar-item" to="/">Feed</router-link>
           <div class="navbar-item has-dropdown is-hoverable" to="/">
             <router-link class="navbar-item" :to="`/@${$user.username}`">
-              <span class="img">
-                <img :src="$user.avatar" :alt="$user.first_name">
-              </span>
+              <figure class="image is-24x24">
+                <img :src="$user.avatar" :alt="$user.first_name" class="is-round">
+              </figure>
+              &nbsp;
               Profile
             </router-link>
             <div class="navbar-dropdown">
@@ -43,11 +42,25 @@
 </template>
 
 <script>
+import Search from './Search'
+
 export default {
+  components: { Search },
+
+  data () {
+    return {
+      activeClass: ''
+    }
+  },
+
   methods: {
     logout () {
       this.$auth.logout()
       this.$router.push({ name: 'login' })
+    },
+
+    toggleMenu () {
+      this.activeClass = this.activeClass === '' ? 'is-active' : ''
     }
   }
 }

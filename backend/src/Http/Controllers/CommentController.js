@@ -1,8 +1,8 @@
 import Controller from './Controller'
-import Record from '@/Database/Models/Record'
-import RecordValidator from '@/Http/Validators/RecordValidator'
+import Comment from '@/Database/Models/Comment'
+import CommentValidator from '@/Http/Validators/CommentValidator'
 
-export default class TemplateController extends Controller {
+export default class CommentController extends Controller {
   /**
    * Class constructor.
    *
@@ -11,7 +11,7 @@ export default class TemplateController extends Controller {
   constructor () {
     super()
 
-    this.setValidator(RecordValidator)
+    this.setValidator(CommentValidator)
   }
 
   /**
@@ -22,9 +22,9 @@ export default class TemplateController extends Controller {
    * @return void
    */
   index (req, res) {
-    Record.q.orderBy('records.id', 'desc')
-      .eager('[user, comments, comments.user]')
-      .then((records) => res.send(records))
+    Comment.q.then((comments) => {
+      res.send(comments)
+    })
   }
 
   /**
@@ -39,15 +39,14 @@ export default class TemplateController extends Controller {
       return
     }
 
-    req.user.$relatedQuery('records')
+    req.user.$relatedQuery('comments')
       .insert({
-        description: req.body.description,
-        background: req.body.background,
-        text: req.body.text,
-        template_data: JSON.stringify(req.body.template_data)
+        user_id: req.user.id,
+        record_id: req.body.record_id,
+        text: req.body.text
       })
       .then(() => {
-        return res.sendStatus(201)
+        res.sendStatus(201)
       })
   }
 
@@ -81,8 +80,8 @@ export default class TemplateController extends Controller {
    * @return void
    */
   destroy (req, res) {
-    req.user.$relatedQuery('records')
-      .where('id', req.params.record)
+    Comment.q.where('id', req.params.comment)
+      .where('user_id', req.user.id)
       .delete()
       .then((rowsCount) => {
         if (rowsCount === 0) {
